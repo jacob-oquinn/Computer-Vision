@@ -15,7 +15,7 @@ import numpy as np
 
 def run_main(FLAGS):    
     # load in MNIST
-    (x_train, _), (x_test, _) = tf.keras.datasets.mnist.load_data()
+    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
     
     # rescale to between 0-1
     x_train = x_train / 255.0
@@ -47,10 +47,13 @@ def run_main(FLAGS):
             else:
                 pred = autoencoder_conv.predict([x_test[test_index].reshape(-1,28,28,1)])[0]
                 axis[i,j].imshow(pred, cmap='gray')
+    
+    # Save output image
+    fig.savefig('output.png')
    
     
 if __name__ == '__main__':
-    # Set parameters for Sparse Autoencoder
+    # Set parameters for Autoencoder
     parser = argparse.ArgumentParser('Autoencoder Exercise.')
     parser.add_argument('--mode',
                         type=int, default=1,
