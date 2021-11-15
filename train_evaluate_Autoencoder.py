@@ -24,6 +24,12 @@ def run_main(FLAGS):
     # Initialize the model
     autoencoder = Autoencoder(FLAGS.mode)
     
+    # Select optimizer
+    optimizer = keras.optimizers.Adam()
+    
+    # Compile model
+    autoencoder_conv.compile(optimizer, loss='mse')
+    
     # train the model
     autoencoder.fit(x_train, x_train, epochs=10, batch_size=64, validation_split=.15)
     
@@ -42,7 +48,6 @@ def run_main(FLAGS):
                 pred = autoencoder_conv.predict([x_test[test_index].reshape(-1,28,28,1)])[0]
                 axis[i,j].imshow(pred, cmap='gray')
    
-    
     
 if __name__ == '__main__':
     # Set parameters for Sparse Autoencoder
